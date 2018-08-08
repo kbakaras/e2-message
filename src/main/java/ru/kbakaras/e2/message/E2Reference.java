@@ -31,4 +31,9 @@ public class E2Reference extends E2AttributeValue {
 
         return false;
     }
+
+    @Override
+    public String toString() {
+        return entityName + "(" + elementUid + ")";
+    }
 }

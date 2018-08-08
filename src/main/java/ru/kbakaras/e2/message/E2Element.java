@@ -32,6 +32,10 @@ public class E2Element {
         return Boolean.parseBoolean(xml.attributeValue(E2.CHANGED));
     }
 
+    public boolean isDeleted() {
+        return Boolean.parseBoolean(xml.attributeValue(E2.DELETED));
+    }
+
 
     public E2Table tableOrNull(String tableName) {
         XPath expr = tableXPath.get();
@@ -53,6 +57,11 @@ public class E2Element {
 
     public E2Element setChanged(boolean changed) {
         xml.addAttribute(E2.CHANGED, changed ? "true" : null);
+        return this;
+    }
+
+    public E2Element setDeleted(boolean deleted) {
+        xml.addAttribute(E2.DELETED, deleted ? "true" : null);
         return this;
     }
 

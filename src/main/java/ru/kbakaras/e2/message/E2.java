@@ -18,6 +18,7 @@ public class E2 {
     public static final String ELEMENT        = "element";
     public static final String ELEMENT_UID    = "elementUid";
     public static final String CHANGED        = "changed";
+    public static final String DELETED        = "deleted";
     public static final String ATTRIBUTE      = "attribute";
     public static final String ATTRIBUTE_NAME = "attributeName";
     public static final String REFERENCE      = "reference";
