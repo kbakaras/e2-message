@@ -9,6 +9,7 @@ import ru.kbakaras.sugar.lazy.Lazy;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Класс, инкапсулирующий работу с атрибутами элементов и строк таблиц.
@@ -22,10 +23,13 @@ public class E2Attributes {
         this.xml = xml;
     }
 
-    public List<E2Attribute> list() {
+    public Stream<E2Attribute> stream() {
         return xml.elements("attribute").stream()
-                .map(E2Attribute::new)
-                .collect(Collectors.toList());
+                .map(E2Attribute::new);
+    }
+
+    public List<E2Attribute> list() {
+        return stream().collect(Collectors.toList());
     }
 
     public E2Attribute getNullable(String attributeName) {
