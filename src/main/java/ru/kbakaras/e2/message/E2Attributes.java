@@ -48,12 +48,24 @@ public class E2Attributes {
      * @return true, если атрибут существует и содержит значение "true". Во всех остальных
      * случаях - false.
      */
-    public boolean getBoolean(String attributeName) {
+    public boolean is(String attributeName) {
         return get(attributeName)
                 .map(attr -> "true".equals(attr.value().string()))
                 .orElse(false);
     }
 
+    /**
+     *
+     * @param attributeName
+     * @param value
+     * @return true, если атрибут существует и содержит строку, эквивалентную переданной
+     * в параметре value. Во всех остальных случаях - false.
+     */
+    public boolean isEqual(String attributeName, String value) {
+        return get(attributeName)
+                .map(attr -> attr.value().string().equals(value))
+                .orElse(false);
+    }
 
     public E2Attribute add(String attributeName) {
         return new E2Attribute(xml.addElement(E2.ATTRIBUTE))
