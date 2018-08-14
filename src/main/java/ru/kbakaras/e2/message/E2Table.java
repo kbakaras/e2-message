@@ -15,6 +15,10 @@ public class E2Table implements Iterable<E2Row> {
         this.parent = parent;
     }
 
+    public String tableName() {
+        return xml.attributeValue(E2.TABLE_NAME);
+    }
+
     public E2Row rowOrNull(int index) {
         List<Element> rowElements = xml.elements(E2.ROW);
         return index < rowElements.size() ? new E2Row(rowElements.get(index)) : null;

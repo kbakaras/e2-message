@@ -6,7 +6,9 @@ import org.dom4j.XPath;
 import org.jaxen.SimpleVariableContext;
 import ru.kbakaras.sugar.lazy.Lazy;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class E2Element {
     public final E2Entity parent;
@@ -47,6 +49,12 @@ public class E2Element {
 
     public Optional<E2Table> table(String tableName) {
         return Optional.ofNullable(tableOrNull(tableName));
+    }
+
+    public List<E2Table> tables() {
+        return xml.elements(E2.TABLE).stream()
+                .map(xml -> new E2Table(xml, this))
+                .collect(Collectors.toList());
     }
 
 
