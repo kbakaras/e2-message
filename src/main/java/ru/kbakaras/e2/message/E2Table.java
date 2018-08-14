@@ -2,10 +2,11 @@ package ru.kbakaras.e2.message;
 
 import org.dom4j.Element;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-public class E2Table {
+public class E2Table implements Iterable<E2Row> {
     public final E2Element parent;
     private Element xml;
 
@@ -15,12 +16,31 @@ public class E2Table {
     }
 
     public E2Row rowOrNull(int index) {
-        List<Element> rowElements = xml.elements("row");
+        List<Element> rowElements = xml.elements(E2.ROW);
         return index < rowElements.size() ? new E2Row(rowElements.get(index)) : null;
     }
     public Optional<E2Row> row(int index) {
         return Optional.ofNullable(rowOrNull(index));
     }
+
+    @Override
+    public Iterator<E2Row> iterator() {
+        return new Iterator<E2Row>() {
+            private Iterator<Element> iterator = xml.elements(E2.ROW).iterator();
+
+            @Override
+            public boolean hasNext() {
+                return iterator.hasNext();
+            }
+
+            @Override
+            public E2Row next() {
+                return new E2Row(iterator.next());
+            }
+        };
+
+    }
+
 
     public E2Table setName(String name) {
         this.xml.addAttribute(E2.TABLE_NAME, name);
