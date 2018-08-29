@@ -78,4 +78,8 @@ public class E2Attribute implements E2Referring<E2Attribute> {
 
         return this;
     }
+
+    public static Integer mapInteger(E2Attribute attribute) {
+        return new Integer(attribute.value().string());
+    }
 }
