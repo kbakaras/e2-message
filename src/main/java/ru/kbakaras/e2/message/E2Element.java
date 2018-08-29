@@ -97,6 +97,11 @@ public class E2Element {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return String.format("%1$s(%2$s)", entityName(), getUid());
+    }
+
     private static Lazy<XPath> tableXPath = Lazy.of(() -> {
         XPath expr = DocumentFactory.getInstance().createXPath(
                 "e2:table[@tableName=$tableName]",
