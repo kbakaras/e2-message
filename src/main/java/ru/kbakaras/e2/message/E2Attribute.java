@@ -2,6 +2,7 @@ package ru.kbakaras.e2.message;
 
 import org.dom4j.Element;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 public class E2Attribute implements E2Referring<E2Attribute> {
@@ -81,6 +82,10 @@ public class E2Attribute implements E2Referring<E2Attribute> {
 
     public static Integer mapInteger(E2Attribute attribute) {
         return new Integer(attribute.value().string());
+    }
+
+    public static BigDecimal mapDecimal(E2Attribute attribute) {
+        return new BigDecimal(attribute.value().string());
     }
 
     public static String mapString(E2Attribute attribute) {
