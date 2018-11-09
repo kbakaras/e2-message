@@ -1,5 +1,6 @@
 package ru.kbakaras.e2.message;
 
+import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.QName;
@@ -20,5 +21,13 @@ public class Use {
                 .createDocument(DocumentHelper.createElement(
                         new QName(name, new DefaultNamespace(null, nsUri))
                 )).getRootElement();
+    }
+
+    public static Element parse4Root(String xmlStr) {
+        try {
+            return DocumentHelper.parseText(xmlStr).getRootElement();
+        } catch (DocumentException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 }

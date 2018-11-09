@@ -11,6 +11,9 @@ public class E2Update extends E2Payload {
     public E2Update(Element xml) {
         super(xml);
     }
+    public E2Update(String xmlStr) {
+        super(Use.parse4Root(xmlStr));
+    }
 
 
     public UUID systemUid() {
