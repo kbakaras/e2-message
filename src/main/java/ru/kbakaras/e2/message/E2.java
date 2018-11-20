@@ -30,6 +30,8 @@ public class E2 {
     public static final String ROW            = "row";
 
     public static final String URIB           = "urib";
+    public static final String ID             = "id";
+    public static final String SYNTH          = "synth";
 
     public static final String CONTEXT        = "context";
     public static final String SYSTEM         = "system";

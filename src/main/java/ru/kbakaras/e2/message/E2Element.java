@@ -38,6 +38,10 @@ public class E2Element {
         return Boolean.parseBoolean(xml.attributeValue(E2.DELETED));
     }
 
+    public boolean isSynth() {
+        return Boolean.parseBoolean(xml.attributeValue(E2.SYNTH));
+    }
+
 
     public E2Table tableOrNull(String tableName) {
         XPath expr = tableXPath.get();
@@ -70,6 +74,11 @@ public class E2Element {
 
     public E2Element setDeleted(boolean deleted) {
         xml.addAttribute(E2.DELETED, deleted ? "true" : null);
+        return this;
+    }
+
+    public E2Element setSynth(boolean synth) {
+        xml.addAttribute(E2.SYNTH, synth ? "true" : null);
         return this;
     }
 
