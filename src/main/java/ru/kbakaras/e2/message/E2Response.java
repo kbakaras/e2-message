@@ -3,10 +3,14 @@ package ru.kbakaras.e2.message;
 import org.dom4j.Element;
 import ru.kbakaras.sugar.lazy.Lazy;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
-public class E2Response {
+public class E2Response implements E2XmlProducer {
     private Element xml;
+
+    private Lazy<List<E2SystemResponse>> responses = Lazy.of(ArrayList::new);
 
     public E2Response(Element xml) {
         this.xml = xml;
@@ -39,9 +43,11 @@ public class E2Response {
 
 
     public E2SystemResponse addSystemResponse(String responseSystemUid, String responseSystemName) {
-        return new E2SystemResponse(xml.addElement("systemResponse"), this)
+        E2SystemResponse response = new E2SystemResponse(xml.addElement("systemResponse"), this)
                 .setResponseSystemUid(responseSystemUid)
                 .setResponseSystemName(responseSystemName);
+        responses.get().add(response);
+        return response;
     }
 
     public void addSystemError(String responseSystemUid, String responseSystemName, Element errorResponse) {
@@ -51,7 +57,11 @@ public class E2Response {
                 .add(errorResponse.detach());
     }
 
+    @Override
     public Element xml() {
+        if (!responses.isVirgin()) {
+            responses.get().forEach(E2SystemResponse::reorderEntitiesAndStates);
+        }
         return xml;
     }
 }

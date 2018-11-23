@@ -83,7 +83,7 @@ public class E2Element {
     }
 
     public E2Table addTable(String tableName) {
-        return new E2Table(xml.addElement(E2.TABLE), this).setName(tableName);
+        return new E2Table(xml.addElement(E2.TABLE), this).setTableName(tableName);
     }
 
     public E2Reference asReference() {

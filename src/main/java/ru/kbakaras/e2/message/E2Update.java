@@ -4,7 +4,7 @@ import org.dom4j.Element;
 
 import java.util.UUID;
 
-public class E2Update extends E2Payload {
+public class E2Update extends E2Payload implements E2XmlProducer {
     public E2Update() {
         super(Use.createRoot("updateRequest", E2.NS));
     }
@@ -35,7 +35,9 @@ public class E2Update extends E2Payload {
         return this;
     }
 
+    @Override
     public Element xml() {
+        reorderEntitiesAndStates();
         return xml;
     }
 }

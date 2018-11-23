@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 /**
  * Обёртка для удобства работы с запросами на получение элементов.
  */
-public class E2Request {
+public class E2Request implements E2XmlProducer {
     private Element xml;
 
     private Lazy<E2Payload> lContext = Lazy.of(() -> new E2Payload(
@@ -95,7 +95,11 @@ public class E2Request {
         return lContext.get();
     }
 
+    @Override
     public Element xml() {
+        if (!lContext.isVirgin()) {
+            lContext.get().reorderEntitiesAndStates();
+        }
         return xml;
     }
 }

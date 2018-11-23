@@ -21,6 +21,8 @@ public class E2 {
     public static final String DELETED        = "deleted";
     public static final String ATTRIBUTE      = "attribute";
     public static final String ATTRIBUTE_NAME = "attributeName";
+    public static final String STATE          = "state";
+    public static final String STATE_NAME     = "stateName";
     public static final String REFERENCE      = "reference";
     public static final String VALUE          = "value";
     public static final String CONDITION      = "condition";

@@ -46,7 +46,7 @@ public class E2Table implements Iterable<E2Row> {
     }
 
 
-    public E2Table setName(String name) {
+    public E2Table setTableName(String name) {
         this.xml.addAttribute(E2.TABLE_NAME, name);
         return this;
     }
