@@ -50,16 +50,6 @@ public class E2Entity {
     }
 
 
-    public E2Entity setSynth(boolean synth) {
-        xml.addAttribute("synth", synth ? "true" : null);
-        return this;
-    }
-
-    public E2Entity setVersion(String version) {
-        this.xml.addAttribute(E2.ENTITY_VERSION, version);
-        return this;
-    }
-
     /**
      * Создаёт новый элемент в данной сущности, копирует признак изменённости и уникальный идентификатор
      * из переданного в параметре исходного элемента.
