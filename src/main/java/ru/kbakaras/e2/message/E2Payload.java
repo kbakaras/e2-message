@@ -10,7 +10,6 @@ import ru.kbakaras.sugar.lazy.MapCache;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class E2Payload {
@@ -73,12 +72,10 @@ public class E2Payload {
      * Создаёт в выходном сообщении узел для указанной сущности, если
      * он ещё не был создан.
      * @param entityName Имя сущности
-     * @param initializer Инициализатор для сущности. Он будет применён только в
-     *                    том случае, если до вызова узел сущности не существовал.
      * @return Ссылку на обёртку для узла сущности.
      */
-    public E2Entity createEntity(String entityName, Consumer<E2Entity> initializer) {
-        return entities.get(entityName, initializer);
+    public E2Entity createEntity(String entityName) {
+        return entities.get(entityName);
     }
 
     /**
