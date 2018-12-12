@@ -37,4 +37,10 @@ public class E2 {
     public static final String DELETED        = "deleted";
     public static final String ID             = "id";
     public static final String SYNTH          = "synth";
+    public static final String USE            = "use";
+    public static final String USE_Load       = "load";
+    public static final String USE_Reference  = "reference";
+    public static final String USE_Update     = "update";
+    public static final String USE_Create     = "create";
+    public static final String USE_Always     = "always";
 }

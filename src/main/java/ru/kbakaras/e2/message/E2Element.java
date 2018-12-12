@@ -42,6 +42,20 @@ public class E2Element {
         return Boolean.parseBoolean(xml.attributeValue(E2.SYNTH));
     }
 
+    public E2ElementUse use() {
+        String use = xml.attributeValue(E2.USE);
+        if (use == null || E2.USE_Load.equals(use)) {
+            return E2ElementUse.Load;
+        } else if (E2.USE_Reference.equals(use)) {
+            return E2ElementUse.Reference;
+        } else if (E2.USE_Update.equals(use)) {
+            return E2ElementUse.Update;
+
+        } else {
+            throw new E2Exception4Read("Invalid value for element's flag `use`: " + use);
+        }
+    }
+
 
     public E2Table tableOrNull(String tableName) {
         XPath expr = tableXPath.get();
@@ -81,6 +95,20 @@ public class E2Element {
         xml.addAttribute(E2.SYNTH, synth ? "true" : null);
         return this;
     }
+
+    public E2Element setUse(E2ElementUse use) {
+        String useValue = null;
+
+        if (use == E2ElementUse.Reference) {
+            useValue = E2.USE_Reference;
+        } else if (use == E2ElementUse.Update) {
+            useValue = E2.USE_Update;
+        }
+
+        xml.addAttribute(E2.USE, useValue);
+        return this;
+    }
+
 
     public E2Table addTable(String tableName) {
         return new E2Table(xml.addElement(E2.TABLE), this).setTableName(tableName);

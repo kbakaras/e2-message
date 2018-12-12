@@ -28,6 +28,20 @@ public class E2Attribute implements E2Referring<E2Attribute> {
         return Boolean.parseBoolean(xml.attributeValue(E2.ID));
     }
 
+    public E2AttributeUse use() {
+        String use = xml.attributeValue(E2.USE);
+
+        if (use == null || E2.USE_Always.equals(use)) {
+            return E2AttributeUse.Always;
+        } else if (E2.USE_Create.equals(use)) {
+            return E2AttributeUse.Create;
+
+        } else {
+            throw new E2Exception4Read("Invalid value for attribute's flag `use`: " + use);
+        }
+    }
+
+
     public E2AttributeValue attributeValue() {
         return isReference() ? reference() : value();
     }
@@ -61,6 +75,18 @@ public class E2Attribute implements E2Referring<E2Attribute> {
         xml.addAttribute(E2.ID, isId ? "true" : null);
         return this;
     }
+
+    public E2Attribute setUse(E2AttributeUse use) {
+        String useValue = null;
+
+        if (use == E2AttributeUse.Create) {
+            useValue = E2.USE_Create;
+        }
+
+        xml.addAttribute(E2.USE, useValue);
+        return this;
+    }
+
 
     @Override
     public E2Attribute setValue(String value) {
