@@ -38,4 +38,8 @@ public class E2State implements Iterable<E2Row> {
         this.xml.addAttribute(E2.STATE_NAME, name);
         return this;
     }
+
+    public E2Row addRow() {
+        return new E2Row(xml.addElement(E2.ROW));
+    }
 }
