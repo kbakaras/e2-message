@@ -66,11 +66,6 @@ public class E2Attribute implements E2Referring<E2Attribute> {
         return this;
     }
 
-    public E2Attribute setSynth(boolean synth) {
-        xml.addAttribute(E2.SYNTH, synth ? "true" : null);
-        return this;
-    }
-
     public E2Attribute setId(boolean isId) {
         xml.addAttribute(E2.ID, isId ? "true" : null);
         return this;
@@ -112,6 +107,11 @@ public class E2Attribute implements E2Referring<E2Attribute> {
                 .addAttribute(E2.ENTITY_NAME, entityName)
                 .addAttribute(E2.ELEMENT_UID, elementUid);
 
+        return this;
+    }
+
+    public E2Attribute setReference(E2Reference reference) {
+        setReference(reference.entityName, reference.elementUid);
         return this;
     }
 

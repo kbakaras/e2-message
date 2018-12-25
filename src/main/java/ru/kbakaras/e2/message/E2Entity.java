@@ -2,12 +2,14 @@ package ru.kbakaras.e2.message;
 
 import org.dom4j.DocumentFactory;
 import org.dom4j.Element;
+import org.dom4j.Node;
 import org.dom4j.XPath;
 import org.jaxen.SimpleVariableContext;
 import ru.kbakaras.sugar.lazy.Lazy;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class E2Entity {
@@ -49,6 +51,10 @@ public class E2Entity {
                 .collect(Collectors.toList());
     }
 
+    public ElementFinder find() {
+        return new ElementFinder();
+    }
+
 
     /**
      * Создаёт новый элемент в данной сущности, копирует признак изменённости и уникальный идентификатор
@@ -72,6 +78,13 @@ public class E2Entity {
         return new E2Element(xml.addElement("element"), this).setUid(uid);
     }
 
+    /**
+     * Создаёт новый элемент, помеченный флагом 'synth', со случайным новым UID.<br/>
+     * Это сахарный метод. Он добавлен, потому что данный кейс встерчается часто.
+     */
+    public E2Element addSynthElement() {
+        return addElement(UUID.randomUUID().toString()).setSynth(true);
+    }
 
     private static Lazy<XPath> elementXPath = Lazy.of(() -> {
         XPath expr = DocumentFactory.getInstance().createXPath(
@@ -98,4 +111,49 @@ public class E2Entity {
 
         return expr;
     });
+
+    public class ElementFinder {
+        private String expr = "e2:element";
+
+        public ElementFinder by(String attributeName, String attributeValue) {
+            expr += "[e2:attribute[@attributeName='" + attributeName + "']" +
+                    "/e2:value[text()='" + attributeValue + "']]";
+            return this;
+        }
+
+        public ElementFinder by(String attributeName, E2Reference reference) {
+            expr += "[e2:attribute[@attributeName='" + attributeName + "']" +
+                    "/e2:reference[@entityName='" + reference.entityName + "' and @elementUid='" + reference.elementUid + "']]";
+            return this;
+        }
+
+
+        private XPath createXPath() {
+            XPath xPath = DocumentFactory.getInstance().createXPath(expr);
+            xPath.setNamespaceURIs(E2.E2MAP);
+            return xPath;
+        }
+
+
+        public Optional<E2Element> single() {
+            List<Node> list = createXPath().selectNodes(xml);
+            if (list.size() == 1) {
+                return Optional.of(new E2Element(
+                        (Element) list.get(0),
+                        E2Entity.this));
+
+            } else if (list.isEmpty()) {
+                return Optional.empty();
+
+            } else {
+                throw new E2Exception4Read("Found multiple elements in single-element request!");
+            }
+        }
+
+        public List<E2Element> list() {
+            return createXPath().selectNodes(xml).stream()
+                    .map(node -> new E2Element((Element) node, E2Entity.this))
+                    .collect(Collectors.toList());
+        }
+    }
 }

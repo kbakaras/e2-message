@@ -71,11 +71,6 @@ public class E2Attributes {
         return new E2Attribute(xml.addElement(E2.ATTRIBUTE))
                 .setAttributeName(attributeName);
     }
-    public E2Attribute addSynth(String attributeName) {
-        return new E2Attribute(xml.addElement(E2.ATTRIBUTE))
-                .setAttributeName(attributeName)
-                .setSynth(true);
-    }
 
 
     private static Lazy<XPath> attributeXPath = Lazy.of(() -> {
