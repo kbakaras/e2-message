@@ -10,9 +10,11 @@ import ru.kbakaras.sugar.lazy.MapCache;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class E2Payload {
+
     protected Element xml;
 
     private MapCache<String, E2Entity> entities = MapCache.of(entityName ->
@@ -31,6 +33,15 @@ public class E2Payload {
 
     public E2Payload(Element xml) {
         this.xml = xml;
+    }
+
+
+    public UUID systemUid() {
+        return UUID.fromString(xml.attributeValue(E2.SYSTEM_UID));
+    }
+
+    public String systemName() {
+        return xml.attributeValue(E2.SYSTEM_NAME);
     }
 
 
@@ -65,6 +76,19 @@ public class E2Payload {
     public Optional<E2Element> referencedElement(E2Reference reference) {
         return entity(reference.entityName)
                 .flatMap(entity -> entity.element(reference.elementUid));
+    }
+
+
+    @SuppressWarnings("unchecked")
+    public <P extends E2Payload> P setSystemUid(String systemUid) {
+        xml.addAttribute(E2.SYSTEM_UID, systemUid);
+        return (P) this;
+    }
+
+    @SuppressWarnings("unchecked")
+    public <P extends E2Payload> P setSystemName(String systemName) {
+        xml.addAttribute(E2.SYSTEM_NAME, systemName);
+        return (P) this;
     }
 
 
@@ -126,4 +150,5 @@ public class E2Payload {
 
         return expr;
     });
+
 }

@@ -44,8 +44,8 @@ public class E2Response implements E2XmlProducer {
 
     public E2SystemResponse addSystemResponse(String responseSystemUid, String responseSystemName) {
         E2SystemResponse response = new E2SystemResponse(xml.addElement("systemResponse"), this)
-                .setResponseSystemUid(responseSystemUid)
-                .setResponseSystemName(responseSystemName);
+                .setSystemUid(responseSystemUid)
+                .setSystemName(responseSystemName);
         responses.get().add(response);
         return response;
     }
