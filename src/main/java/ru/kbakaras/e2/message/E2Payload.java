@@ -13,6 +13,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class E2Payload {
 
     protected Element xml;
@@ -80,9 +81,13 @@ public class E2Payload {
 
 
     @SuppressWarnings("unchecked")
-    public <P extends E2Payload> P setSystemUid(String systemUid) {
-        xml.addAttribute(E2.SYSTEM_UID, systemUid);
+    public <P extends E2Payload> P setSystemUid(String systemUidString) {
+        xml.addAttribute(E2.SYSTEM_UID, systemUidString);
         return (P) this;
+    }
+
+    public <P extends E2Payload> P setSystemUid(UUID systemUid) {
+        return setSystemUid(systemUid.toString());
     }
 
     @SuppressWarnings("unchecked")
