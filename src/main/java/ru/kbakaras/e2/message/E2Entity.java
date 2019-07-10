@@ -9,15 +9,18 @@ import ru.kbakaras.sugar.lazy.Lazy;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class E2Entity {
+
     private Element xml;
+
 
     public E2Entity(Element xml) {
         this.xml = xml;
     }
+
 
     public String entityName() {
         return xml.attributeValue(E2.ENTITY_NAME);
@@ -71,20 +74,12 @@ public class E2Entity {
     /**
      * Создаёт новый элемент в данной сущности, назначет ему указанный uid.
      * При назначении uid не выполняется никаких проверок на уникальность.
-     * @param uid
      * @return Обёртка для нового элемента
      */
     public E2Element addElement(String uid) {
         return new E2Element(xml.addElement("element"), this).setUid(uid);
     }
 
-    /**
-     * Создаёт новый элемент, помеченный флагом 'synth', со случайным новым UID.<br/>
-     * Это сахарный метод. Он добавлен, потому что данный кейс встерчается часто.
-     */
-    public E2Element addSynthElement() {
-        return addElement(UUID.randomUUID().toString()).setSynth(true);
-    }
 
     private static Lazy<XPath> elementXPath = Lazy.of(() -> {
         XPath expr = DocumentFactory.getInstance().createXPath(
@@ -111,6 +106,7 @@ public class E2Entity {
 
         return expr;
     });
+
 
     public class ElementFinder {
         private String expr = "e2:element";
@@ -156,4 +152,5 @@ public class E2Entity {
                     .collect(Collectors.toList());
         }
     }
+
 }
