@@ -2,6 +2,9 @@ package ru.kbakaras.e2.message;
 
 import org.dom4j.Element;
 
+/**
+ * Класс-обёртка для xml-сообщения с обновлением.
+ */
 public class E2Update extends E2Payload implements E2XmlProducer {
 
     public E2Update() {

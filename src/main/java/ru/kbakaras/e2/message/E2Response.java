@@ -7,10 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Класс-обёртка для сообщения, агрегирующего ответы на запрос, полученные от нескольких систем.
+ */
 public class E2Response implements E2XmlProducer {
+
     private Element xml;
 
     private Lazy<List<E2SystemResponse>> responses = Lazy.of(ArrayList::new);
+
 
     public E2Response(Element xml) {
         this.xml = xml;
@@ -24,6 +29,7 @@ public class E2Response implements E2XmlProducer {
     public E2Response(String responseType) {
         this.xml = Use.createRoot(responseType + "Response", E2.NS);
     }
+
 
     public E2SystemResponse systemResponse() {
         return Optional.ofNullable(xml.element("systemResponse"))
@@ -50,12 +56,16 @@ public class E2Response implements E2XmlProducer {
         return response;
     }
 
-    public void addSystemError(String responseSystemUid, String responseSystemName, Element errorResponse) {
+    public E2Response addSystemError(String responseSystemUid, String responseSystemName, Element errorResponse) {
+
         xml.addElement("systemResponse")
                 .addAttribute("systemUid",  responseSystemUid)
                 .addAttribute("systemName", responseSystemName)
                 .add(errorResponse.detach());
+
+        return this;
     }
+
 
     @Override
     public Element xml() {
@@ -64,4 +74,5 @@ public class E2Response implements E2XmlProducer {
         }
         return xml;
     }
+
 }
