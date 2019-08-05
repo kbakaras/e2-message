@@ -16,4 +16,12 @@ public class E2SystemResponse extends E2Payload {
         this.parent = parent;
     }
 
+
+    public E2SystemError addSystemError() {
+        return new E2SystemError(
+                Use.createRoot(E2.ERROR, E2.NS),
+                this
+        );
+    }
+
 }

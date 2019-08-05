@@ -56,16 +56,6 @@ public class E2Response implements E2XmlProducer {
         return response;
     }
 
-    public E2Response addSystemError(String responseSystemUid, String responseSystemName, Element errorResponse) {
-
-        xml.addElement("systemResponse")
-                .addAttribute("systemUid",  responseSystemUid)
-                .addAttribute("systemName", responseSystemName)
-                .add(errorResponse.detach());
-
-        return this;
-    }
-
 
     @Override
     public Element xml() {
