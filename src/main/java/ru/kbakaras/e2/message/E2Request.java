@@ -44,9 +44,9 @@ public class E2Request implements E2XmlProducer {
     public String requestType() {
         String rootName = xml.getName();
         if ("listRequest".equals(rootName)) {
-            return "list";
+            return REQUEST_TYPE_LIST;
         } else if ("elementRequest".equals(rootName)) {
-            return "element";
+            return REQUEST_TYPE_ELEMENT;
         } else {
             throw new IllegalArgumentException("Request type unknown: <" + rootName + ">!");
         }
@@ -102,4 +102,9 @@ public class E2Request implements E2XmlProducer {
         }
         return xml;
     }
+
+
+    public static final String REQUEST_TYPE_LIST    = "list";
+    public static final String REQUEST_TYPE_ELEMENT = "element";
+
 }

@@ -123,8 +123,9 @@ public class E2Payload {
      * а затем <i>state</i>. Так xml будет соответствовать xsd-схеме получателей.
      */
     void reorderEntitiesAndStates() {
+        List<Element> errors   = new ArrayList<>();
         List<Element> entities = new ArrayList<>();
-        List<Element> states = new ArrayList<>();
+        List<Element> states   = new ArrayList<>();
 
         for (Element element: xml.elements()) {
             element.detach();
@@ -132,9 +133,12 @@ public class E2Payload {
                 entities.add(element);
             } else if (E2.STATE.equals(element.getName())) {
                 states.add(element);
+            } else if (E2.ERROR.equals(element.getName())) {
+                errors.add(element);
             }
         }
 
+        errors.forEach(xml::add);
         entities.forEach(xml::add);
         states.forEach(xml::add);
     }
